@@ -1,18 +1,44 @@
+
+import { redirect } from 'next/dist/server/api-utils'
 import Link from 'next/link'
+import {signIn, useSession} from 'next-auth/react'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React,{ useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import Layout from '../components/Layout'
+import Layout from '../components/Layout';
+import { toast } from 'react-toastify'
+
+
 
 function LoginScreen() {
+    const{data:session} = useSession()
     const router = useRouter();
+    const { redirect } = router.query;
+   useEffect(()=>{
+    if(session?.user){
+        router.push(redirect || '/');
+    }
+   },[router,session,redirect]);
     const{
         handleSubmit,
         register,
         formState:{errors},
     }= useForm();
-const submitHandler=({email,password})=>{
+const submitHandler= async({email,password})=>{
 console.log(email,password)
+try {
+    
+    const result = await signIn('credentials',{
+        redirect:false,
+        email,
+        password
+    })
+    if(result.error){
+        toast.error(result.error);
+    }
+} catch (err) {
+    toast.error(getError(err));
+}
 }
     return (
         <Layout title="Login"><form className='mx-auto max-w-screen-md' onSubmit={handleSubmit(submitHandler)}>
@@ -24,7 +50,7 @@ console.log(email,password)
                  pattern:{value:/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
                 message:'Please enter valid email address',}}, 
                    )}
-                 className= "w-full" id="email" autofocus></input>
+                 className= "w-full" id="email" autoFocus></input>
                    {errors.email && (<div className='text-red-500'>{errors.email.message}</div>)}
             </div>
             <div className='mb-4'>
@@ -36,11 +62,10 @@ console.log(email,password)
                  minLength:{value:6,
                 message:'password is more than 5 chars',}}, 
                    )}
-                className= "w-full" id="password" autofocus></input>
+                className= "w-full" id="password" autoFocus></input>
            {errors.password && (<div className='text-red-500'>{errors.password.message}
             </div>)} </div>
             <div className='mb-4'>
-                
                 <button onClick={()=>router.push('login?redirect=/shipping')} className='primary-button'>Login</button>
             </div>
             <div className='mb-4'>
