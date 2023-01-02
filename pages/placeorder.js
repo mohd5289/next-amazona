@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -6,6 +7,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import CheckoutWizard from '../components/CheckoutWizard'
 import Layout from '../components/Layout'
+import { getError } from '../utils/error'
 import { Store } from '../utils/Store'
 
 function PlaceOrderScreen() {
@@ -34,12 +36,15 @@ if(!paymentMethod){
             shippingAddress,
             paymentMethod,
             itemsPrice,
-            shippingAddress,
+            shippingPrice,
             taxPrice,
-            totalPrice
-          })  
+            totalPrice,
+          }); 
+          
           setLoading(false);
           dispatch({type:'CART_CLEAR_ITEMS'})
+          Cookies.set('cart',JSON.stringify({...cart,cartItems:[],}))
+          router.push(`/order/${data._id}`)
         } catch (error) {
             setLoading(false)
             toast.error(getError(error))

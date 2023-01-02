@@ -64,3 +64,4 @@ router.push('/placeorder')
 }
 
 export default PaymentScreen
+PaymentScreen.auth = true
