@@ -3,7 +3,7 @@ import CheckoutWizard from '../components/CheckoutWizard'
 import Layout from '../components/Layout'
 import {useRouter} from 'next/router';
 import { Store } from '../utils/Store';
-import cart from './cart';
+
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 

@@ -35,7 +35,7 @@ function OrderScreen() {
     const {query} = useRouter();
     const orderId = query.id;
     const[{loading,error, order, successPay, loadingPay},dispatch,]= useReducer(reducer,{loading:true, order:{},error:'',})
-  
+   
     
    useEffect(()=>{
         const fetchOrder = async()=>{
@@ -54,6 +54,7 @@ function OrderScreen() {
                 dispatch({type:'PAY_RESET'})
             }
         }else{
+            
             const loadPayPalScript = async()=>{
                 const {data:clientId} = await axios.get('/api/keys/paypal');
             paypalDispatch({type:'resetOptions',
@@ -62,8 +63,10 @@ function OrderScreen() {
                                 currency:'USD'
                             },});
                             paypalDispatch({type: 'setLoadingStatus', value: 'pending'})
-                            loadPayPalScript();
+                          
             }
+            
+            loadPayPalScript();
         }
       
         },[order,orderId, paypalDispatch,successPay])

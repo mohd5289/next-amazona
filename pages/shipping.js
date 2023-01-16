@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import CheckoutWizard from '../components/CheckoutWizard'
 import Layout from '../components/Layout'
 import { Store } from '../utils/Store';
-import cart from './cart';
+
 
 function ShippingScreen() {
     const {state,dispatch} = useContext(Store);

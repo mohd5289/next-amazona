@@ -1,20 +1,19 @@
 
 import axios from 'axios'
-import Head from 'next/head'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
+
+
 import { useContext } from 'react'
 import { toast } from 'react-toastify'
 import Layout from '../components/Layout'
 import ProductItem from '../components/ProductItem'
 import Product from '../models/Product'
-import data from '../utils/data'
+
 import db from '../utils/db'
 import { Store } from '../utils/Store'
 
 
 export default function Home({products}) {
-  const router = useRouter();
+  
   const {state, dispatch} = useContext(Store);
   const {cart} = state;
   const addToCartHandler=async(product)=>{

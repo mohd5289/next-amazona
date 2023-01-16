@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, { useEffect, useReducer } from 'react'
 import Layout from '../components/Layout'
 import { getError } from '../utils/error'
-import { Store } from '../utils/Store'
+
 function reducer(state,action){
 switch(action.type){
     case 'FETCH_REQUEST':
