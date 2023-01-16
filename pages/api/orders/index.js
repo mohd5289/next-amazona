@@ -11,7 +11,7 @@ const {user} = session;
 await db.connect();
 const newOrder = new Order({...req.body, user:user._id,})
 const order = await newOrder.save();
-
+await db.disconnect();
 res.status(201).send(order);
 }
 export default handler
