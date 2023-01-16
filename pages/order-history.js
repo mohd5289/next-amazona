@@ -69,5 +69,6 @@ function OrderHistoryScreen() {
     )
 }
 
-OrderHistoryScreen.auth = true
+
 export default OrderHistoryScreen
+OrderHistoryScreen.auth = true
