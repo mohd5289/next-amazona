@@ -1,5 +1,6 @@
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -31,6 +32,7 @@ function reducer(state,action){
 }
 
 function OrderScreen() {
+    const { data: session } = useSession();
     const[{isPending}, paypalDispatch] = usePayPalScriptReducer();
     const {query} = useRouter();
     const orderId = query.id;
